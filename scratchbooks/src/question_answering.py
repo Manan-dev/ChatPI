@@ -3,10 +3,12 @@ from transformers import pipeline
 import torch
 from pprint import pprint
 
+
 def run(
     question: str,
     context: str,
     model: Optional[str] = None,
+    verbosity: int = 1,
     **kwargs,
 ):
     print("=" * 100)
@@ -30,8 +32,15 @@ def run(
     question = question.strip()
     context = context.strip()
 
-    print(f"C: {context}")
-    print(f"Q: {question}")
+    match verbosity:
+        case 0:
+            pass
+        case 1:
+            print(f"Q: {question}")
+        case 2:
+            print(f"C: {context}")
+            print(f"Q: {question}")
+
     # display(Markdown(f"**Q:** {question}"))
     # display(Markdown(f"**C:** {context}"))
 

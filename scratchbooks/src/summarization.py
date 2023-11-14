@@ -3,9 +3,11 @@ from transformers import pipeline
 import torch
 from pprint import pprint
 
+
 def run(
     text: str,
     model: Optional[str] = None,
+    verbosity: int = 1,
     **kwargs,
 ):
     # TODO: set some good defaults here?
@@ -30,7 +32,12 @@ def run(
     # Run Pipeline
 
     text = text.strip()
-    print(f"> {text}")
+
+    match verbosity:
+        case 0:
+            pass
+        case 1:
+            print(f"> {text}")
 
     res = pipe(
         text,

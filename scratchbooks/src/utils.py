@@ -12,6 +12,18 @@ def read_context(fname, basepath="../sections"):
     print(f"Found: {fnames}")
 
     for fname in files:
+        fnameparts = fname.split(".")
+        if not fnameparts[-2].isdigit():
+            # print(f"Skipping: {fname}")
+            continue
         with open(fname, "r") as f:
             text = f.read().strip()
-            yield text
+            yield fname, text
+
+
+def read_questions(fname, basepath="../sections"):
+    fname = os.path.join(basepath, f"{fname}.q.txt")
+    with open(fname, "r") as f:
+        text = f.read().strip()
+        for line in text.split("\n"):
+            yield line.strip()
