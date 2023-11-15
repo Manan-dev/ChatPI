@@ -3,7 +3,7 @@ import glob
 
 
 def read_context(fname, basepath="../sections"):
-    globpath = os.path.join(basepath, f"{fname}*.txt")
+    globpath = os.path.join(basepath, f"{fname}.*.md")
 
     files = glob.glob(globpath)
     files = sorted(files)
@@ -21,9 +21,42 @@ def read_context(fname, basepath="../sections"):
             yield fname, text
 
 
-def read_questions(fname, basepath="../sections"):
-    fname = os.path.join(basepath, f"{fname}.q.txt")
+def read_qa(fname, basepath="../sections"):
+    fname = os.path.join(basepath, f"{fname}.qa.md")
     with open(fname, "r") as f:
         text = f.read().strip()
-        for line in text.split("\n"):
-            yield line.strip()
+
+        for qa_text in text.split("---"):
+            qa = qa_text.strip().split("\n")
+            qa = [l for l in qa if l.strip()]
+
+            if len(qa) > 2:
+                raise ValueError(f"Too many lines in QA:\n{qa}")
+
+            if len(qa) < 2:
+                raise ValueError(f"Too few lines in QA:\n{qa}")
+
+            q = qa[0].strip()
+            a = qa[1].strip()
+
+            yield q, a
+
+
+def get_similarity_score(sentence1: str, sentence2: str):
+    import spacy
+    from spacy.cli import download
+
+    file = "en_core_web_md"
+
+    if not spacy.util.is_package(file):
+        download(file)
+    nlp = spacy.load(file)
+
+    # Process the sentences
+    doc1 = nlp(sentence1)
+    doc2 = nlp(sentence2)
+
+    # Compute the similarity score
+    similarity_score = doc1.similarity(doc2)
+
+    return similarity_score

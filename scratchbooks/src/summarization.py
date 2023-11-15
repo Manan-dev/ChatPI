@@ -2,6 +2,7 @@ from typing import Optional
 from transformers import pipeline
 import torch
 from pprint import pprint
+from .utils import get_similarity_score
 
 
 def run(
@@ -14,11 +15,13 @@ def run(
     # kwargs.setdefault("min_length", 5)
     # kwargs.setdefault("max_length", 20)
 
-    print("=" * 100)
-    print(f"model: {model}")
-    for k, v in kwargs.items():
-        print(f"{k}: {v}")
-    print("~" * 80)
+    print("-" * 80)
+    match verbosity:
+        case 2:
+            print(f"model: {model}")
+            for k, v in kwargs.items():
+                print(f"{k}: {v}")
+            print("~" * 80)
 
     # Construct Pipeline
 
@@ -34,9 +37,7 @@ def run(
     text = text.strip()
 
     match verbosity:
-        case 0:
-            pass
-        case 1:
+        case 1 | 2:
             print(f"> {text}")
 
     res = pipe(
@@ -62,7 +63,20 @@ def run(
 def run_models(
     text: str,
     models: list[str],
+    expected_answer: str,
     **kwargs,
 ):
+    if expected_answer is None:
+        expected_answer = ""
+
+    answers = []
+    scores = []
+
     for model in models:
-        run(text, model, **kwargs)
+        a = run(text, model, **kwargs)
+        s = get_similarity_score(a, expected_answer)
+        print(f"Similarity score: {s}")
+        answers.append(a)
+        scores.append(s)
+
+    return answers, scores
