@@ -64,7 +64,7 @@ def run(
     answer = answer.strip()
     score = round(score, 3)
 
-    print(f"A: {answer} (confidence: {round(score, 3)})")
+    print(f"A: {answer} (model confidence score: {round(score, 3)})")
     # display(Markdown(f"**A:** {answer} (score: {score})"))
 
     return answer
@@ -86,7 +86,7 @@ def run_models(
     for model in models:
         a = run(question, context, model=model, **kwargs)
         s = get_similarity_score(a, expected_answer)
-        print(f"SIMILARITY: {s}")
+        print(f"EVAL SCORE: {round(s, 4)}")
         answers.append(a)
         scores.append(s)
 

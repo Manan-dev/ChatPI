@@ -18,10 +18,10 @@ Sherlock Holmes
 
 What are the defining characteristics or traits of the central character?
 
-[ANSWER HERE]
+[EXPECTED ANSWER HERE]
 
 ---
 
 What are the characteristics of the main protagonist?
 
-[ANSWER HERE]
+[EXPECTED ANSWER HERE]

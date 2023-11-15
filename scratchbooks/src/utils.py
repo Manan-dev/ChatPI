@@ -46,6 +46,9 @@ def get_similarity_score(sentence1: str, sentence2: str):
     import spacy
     from spacy.cli import download
 
+    sentence1 = sentence1.strip().lower()
+    sentence2 = sentence2.strip().lower()
+
     file = "en_core_web_md"
 
     if not spacy.util.is_package(file):
@@ -60,3 +63,58 @@ def get_similarity_score(sentence1: str, sentence2: str):
     similarity_score = doc1.similarity(doc2)
 
     return similarity_score
+
+
+def create_plots(
+    ctx_name: str,
+    scores_by_model: dict[str, list],
+    scores_by_answer: dict[str, dict[str, list]],
+    scores_by_question_idx: dict[str, dict[str, list]],
+):
+    from matplotlib import pyplot as plt
+
+    print("#" * 80)
+    print("Plotting")
+
+    models = list(scores_by_model.keys())
+    num_questions = len(scores_by_question_idx[models[0]])
+
+    print(f"Models: {models}")
+    print(f"Questions: {num_questions}")
+
+    # scores_by_model
+    fig, ax = plt.subplots(figsize=(10, 5))
+    ax.boxplot(scores_by_model.values())
+    ax.set_xticklabels(scores_by_model.keys())
+    ax.set_title(f"QA Score by Model - {num_questions} Q's each (CTX: {ctx_name})")
+    ax.set_ylabel("Evaluation Score")
+    ax.set_xlabel("Model ID")
+    plt.show()
+
+    # scores_by_answer
+    fig = plt.figure(figsize=(10, 5))
+    for i, m in enumerate(models):
+        ax = fig.add_subplot(1, len(models), i + 1)
+        ax.boxplot(scores_by_answer[m].values())
+        ax.set_xticklabels(scores_by_answer[m].keys())
+        ax.set_title(m)
+        ax.set_ylabel("Evaluation Score")
+        ax.set_xlabel("Expected Answer Group")
+
+    fig.suptitle(
+        f"QA Score by Expected Answer - {num_questions} Q's each (CTX: {ctx_name})"
+    )
+    plt.show()
+
+    # scores_by_question
+    fig = plt.figure(figsize=(10, 5))
+    for i, m in enumerate(models):
+        ax = fig.add_subplot(1, len(models), i + 1)
+        ax.boxplot(scores_by_question_idx[m].values())
+        ax.set_xticklabels(scores_by_question_idx[m].keys())
+        ax.set_title(m)
+        ax.set_ylabel("Evaluation Score")
+        ax.set_xlabel("Question Index")
+
+    fig.suptitle(f"QA Score by Question - (CTX: {ctx_name})")
+    plt.show()
