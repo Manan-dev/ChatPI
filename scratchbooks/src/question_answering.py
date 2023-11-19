@@ -2,18 +2,23 @@ from typing import Optional
 from transformers import pipeline
 import torch
 from pprint import pprint
+from .utils import get_similarity_score
+
 
 def run(
     question: str,
     context: str,
     model: Optional[str] = None,
+    verbosity: int = 1,
     **kwargs,
 ):
-    print("=" * 100)
-    print(f"model: {model}")
-    for k, v in kwargs.items():
-        print(f"{k}: {v}")
-    print("~" * 80)
+    print("-" * 80)
+    match verbosity:
+        case 2:
+            print(f"model: {model}")
+            for k, v in kwargs.items():
+                print(f"{k}: {v}")
+            print("~" * 80)
 
     # Construct Pipeline
 
@@ -30,8 +35,15 @@ def run(
     question = question.strip()
     context = context.strip()
 
-    print(f"C: {context}")
-    print(f"Q: {question}")
+    match verbosity:
+        case 0:
+            pass
+        case 1:
+            print(f"Q: {question}")
+        case 2:
+            print(f"C: {context}")
+            print(f"Q: {question}")
+
     # display(Markdown(f"**Q:** {question}"))
     # display(Markdown(f"**C:** {context}"))
 
@@ -52,12 +64,30 @@ def run(
     answer = answer.strip()
     score = round(score, 3)
 
-    print(f"A: {answer} (score: {round(score, 3)})")
+    print(f"A: {answer} (model confidence score: {round(score, 3)})")
     # display(Markdown(f"**A:** {answer} (score: {score})"))
 
-    return res
+    return answer
 
 
-def run_models(question: str, context: str, models: list[str], **kwargs):
+def run_models(
+    question: str,
+    context: str,
+    models: list[str],
+    expected_answer: str,
+    **kwargs,
+):
+    if expected_answer is None:
+        expected_answer = ""
+
+    answers = []
+    scores = []
+
     for model in models:
-        run(question, context, model=model, **kwargs)
+        a = run(question, context, model=model, **kwargs)
+        s = get_similarity_score(a, expected_answer)
+        print(f"EVAL SCORE: {round(s, 4)}")
+        answers.append(a)
+        scores.append(s)
+
+    return answers, scores
