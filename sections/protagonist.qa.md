@@ -25,3 +25,9 @@ Nervous, delicate, nonchalant, extraordinary
 What are the characteristics of the main protagonist?
 
 Nervous, delicate, nonchalant, extraordinary
+
+---
+
+What are some qualities of the main character?
+
+Nervous, delicate, nonchalant, extraordinary
