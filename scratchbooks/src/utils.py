@@ -49,7 +49,7 @@ def get_similarity_score(sentence1: str, sentence2: str):
     sentence1 = sentence1.strip().lower()
     sentence2 = sentence2.strip().lower()
 
-    file = "en_core_web_md"
+    file = "en_core_web_lg"
 
     if not spacy.util.is_package(file):
         download(file)
