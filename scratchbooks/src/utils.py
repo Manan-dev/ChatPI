@@ -1,5 +1,6 @@
 import os
 import glob
+from termcolor import colored, cprint
 
 
 def read_context(fname, basepath="../sections"):
@@ -60,9 +61,23 @@ def get_similarity_score(sentence1: str, sentence2: str):
     doc2 = nlp(sentence2)
 
     # Compute the similarity score
-    similarity_score = doc1.similarity(doc2)
+    score = doc1.similarity(doc2)
 
-    return similarity_score
+    if score > 0.9:
+        color = "green"
+    elif score > 0.8:
+        color = "light_green"
+    elif score > 0.65:
+        color = "light_yellow"
+    elif score > 0.5:
+        color = "yellow"
+    elif score > 0.25:
+        color = "light_red"
+    else:
+        color = "red"
+    cprint(f"SIMILARITY: {round(score, 4)}", color)
+
+    return score
 
 
 def create_plots(
