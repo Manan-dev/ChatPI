@@ -75,7 +75,6 @@ def run_models(
     for model in models:
         a = run(text, model, **kwargs)
         s = get_similarity_score(a, expected_answer)
-        print(f"EVAL SCORE: {round(s, 4)}")
         answers.append(a)
         scores.append(s)
 

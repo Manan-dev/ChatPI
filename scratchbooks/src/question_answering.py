@@ -14,6 +14,8 @@ def run(
 ):
     print("-" * 80)
     match verbosity:
+        case 1:
+            print(f"model: {model}")
         case 2:
             print(f"model: {model}")
             for k, v in kwargs.items():
@@ -86,7 +88,7 @@ def run_models(
     for model in models:
         a = run(question, context, model=model, **kwargs)
         s = get_similarity_score(a, expected_answer)
-        print(f"EVAL SCORE: {round(s, 4)}")
+
         answers.append(a)
         scores.append(s)
 
