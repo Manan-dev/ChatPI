@@ -1,21 +1,21 @@
 What type of crime was committed?
 
-[EXPECTED ANSWER HERE]
+Theft of a treasure
 
 ---
 
 Where did the crime take place?
 
-[EXPECTED ANSWER HERE]
+Pondicherry Lodge
 
 ---
 
 What are the specific details of the crime scene?
 
-[EXPECTED ANSWER HERE]
+Crime occured in a chemical laboratory
 
 ---
 
 What evidence was left behind at the crime scene?
 
-[EXPECTED ANSWER HERE]
+footprints, mud marks
