@@ -132,6 +132,7 @@ def create_plots(
         scores = [d["score"] for d in scores_by_question[m]]
         all_scores.append(scores)
         ax.bar(range(len(scores)), scores)
+        ax.set_xticklabels(range(len(scores)))
         ax.set_title(m)
         ax.set_ylabel("Evaluation Score")
         ax.set_xlabel("Question Index")
@@ -152,7 +153,7 @@ def create_plots(
     plt.close(fig)
 
     # Table Version
-    headers = ["Q Idx", "Model", "Score", "Question", "Answer"]
+    headers = ["Q Idx", "Model", "Score", "Question", "Answer", "Expected Answer"]
     table = []
     scores = []
     for model, questions in scores_by_question.items():
@@ -161,14 +162,15 @@ def create_plots(
             scores.append(score)
             question = data["question"]
             answer = data["answer"]
-            table.append([i, model, cscore(score), question, answer])
+            expected_answer = data["expected_answer"]
+            table.append([i, model, cscore(score), question, answer, expected_answer])
 
     # sort by question index
     table = sorted(table, key=lambda x: x[0])
 
     # last row for average across the scores
     avg_score = np.mean(scores)
-    table.append(["-", "Avg", cscore(avg_score), "-", "-"])
+    table.append(["Avg", "-", cscore(avg_score), "-", "-"])
 
     print(
         tabulate(
