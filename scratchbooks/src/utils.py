@@ -79,22 +79,12 @@ def get_similarity_score(sentence1: str, sentence2: str):
     doc1 = nlp(sentence1)
     doc2 = nlp(sentence2)
 
+    # remove stop words and lemmatize
+    doc1 = nlp(" ".join([token.lemma_ for token in doc1 if not token.is_stop]))
+    doc2 = nlp(" ".join([token.lemma_ for token in doc2 if not token.is_stop]))
+
     # Compute the similarity score
     score = doc1.similarity(doc2)
-
-    # if score > 0.9:
-    #     color = "green"
-    # elif score > 0.8:
-    #     color = "light_green"
-    # elif score > 0.65:
-    #     color = "light_yellow"
-    # elif score > 0.5:
-    #     color = "yellow"
-    # elif score > 0.25:
-    #     color = "light_red"
-    # else:
-    #     color = "red"
-    # cprint(f"SIMILARITY: {round(score, 4)}", color)
 
     print(f"SIMILARITY: {cscore(score)}")
 
@@ -115,6 +105,7 @@ def create_plots(
     os.makedirs(savedir, exist_ok=True)
 
     models = list(scores_by_model.keys())
+    num_models = len(models)
     num_questions = len(scores_by_question[models[0]])
 
     print(f"Models: {models}")
@@ -125,14 +116,14 @@ def create_plots(
 
     # Plot Version
     # First subplots are individual models
-    fig = plt.figure(figsize=(15, 5))
+    fig = plt.figure(figsize=((num_models + 1) * 5, 5))
     all_scores = []
     for i, m in enumerate(models):
         ax = fig.add_subplot(1, len(models) + 1, i + 1)
         scores = [d["score"] for d in scores_by_question[m]]
         all_scores.append(scores)
         ax.bar(range(len(scores)), scores)
-        ax.set_xticklabels(range(len(scores)))
+        ax.set_ylim(-0.05, 1.05)
         ax.set_title(m)
         ax.set_ylabel("Evaluation Score")
         ax.set_xlabel("Question Index")
@@ -143,6 +134,7 @@ def create_plots(
     all_scores = np.array(all_scores)
     avg_scores = np.mean(all_scores, axis=0)
     ax.bar(range(len(avg_scores)), avg_scores)
+    ax.set_ylim(-0.05, 1.05)
     ax.set_title("Average")
     ax.set_ylabel("Evaluation Score")
     ax.set_xlabel("Question Index")
@@ -182,7 +174,7 @@ def create_plots(
 
     #############################################################################
     # scores_by_answer
-    fig = plt.figure(figsize=(10, 5))
+    fig = plt.figure(figsize=(num_models * 5, 5))
 
     # Boxplot Version
     expected_answers = list(scores_by_answer[models[0]].keys())
@@ -190,7 +182,7 @@ def create_plots(
         ax = fig.add_subplot(1, len(models), i + 1)
         ax.boxplot(scores_by_answer[m].values())
         ax.set_xticklabels(range(len(expected_answers)))
-
+        ax.set_ylim(-0.05, 1.05)
         ax.set_title(m)
         ax.set_ylabel("Evaluation Score")
         ax.set_xlabel("Expected Answer Group")
@@ -260,7 +252,8 @@ def create_plots(
     # Boxplot Version
     fig, ax = plt.subplots(figsize=(10, 5))
     ax.boxplot(scores_by_model.values())
-    ax.set_xticklabels(scores_by_model.keys())
+    ax.set_xticklabels(scores_by_model.keys(), rotation=10, ha="right")
+    ax.set_ylim(-0.05, 1.05)
     ax.set_title(f"QA Score by Model - {num_questions} Q's each (CTX: {ctx_name})")
     ax.set_ylabel("Evaluation Score")
     ax.set_xlabel("Model ID")
