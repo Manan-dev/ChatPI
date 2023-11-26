@@ -18,16 +18,16 @@ Sherlock Holmes
 
 What are the defining characteristics or traits of the central character?
 
-Nervous, delicate, nonchalant, extraordinary
+Nervous, nonchalant, extraordinary
 
 ---
 
 What are the characteristics of the main protagonist?
 
-Nervous, delicate, nonchalant, extraordinary
+Nervous, nonchalant, extraordinary
 
 ---
 
 What are some qualities of the main character?
 
-Nervous, delicate, nonchalant, extraordinary
+Nervous, nonchalant, extraordinary
