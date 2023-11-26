@@ -1,6 +1,9 @@
 import os
 import glob
+import numpy as np
 from termcolor import cprint, colored
+from matplotlib import pyplot as plt
+from tabulate import tabulate
 
 
 def read_context(fname, basepath="../sections"):
@@ -43,7 +46,7 @@ def read_qa(fname, basepath="../sections"):
             yield q, a
 
 
-def colored_score(score: float):
+def cscore(score: float):
     if score > 0.9:
         color = "green"
     elif score > 0.8:
@@ -93,7 +96,7 @@ def get_similarity_score(sentence1: str, sentence2: str):
     #     color = "red"
     # cprint(f"SIMILARITY: {round(score, 4)}", color)
 
-    print(f"SIMILARITY: {colored_score(score)}")
+    print(f"SIMILARITY: {cscore(score)}")
 
     return score
 
@@ -102,21 +105,17 @@ def create_plots(
     ctx_name: str,
     scores_by_model: dict[str, list],
     scores_by_answer: dict[str, dict[str, list]],
-    scores_by_question_idx: dict[str, dict[str, list]],
+    scores_by_question: dict[str, dict[str, dict]],
     tablefmt="double_grid",
     savedir="./plots",
 ):
-    from matplotlib import pyplot as plt
-    import pandas as pd
-    from tabulate import tabulate
-
     print("#" * 80)
     print("Plotting")
 
     os.makedirs(savedir, exist_ok=True)
 
     models = list(scores_by_model.keys())
-    num_questions = len(scores_by_question_idx[models[0]])
+    num_questions = len(scores_by_question[models[0]])
 
     print(f"Models: {models}")
     print(f"Questions: {num_questions}")
@@ -124,15 +123,28 @@ def create_plots(
     #############################################################################
     # scores_by_question
 
-    # Boxplot Version
-    fig = plt.figure(figsize=(10, 5))
+    # Plot Version
+    # First subplots are individual models
+    fig = plt.figure(figsize=(15, 5))
+    all_scores = []
     for i, m in enumerate(models):
-        ax = fig.add_subplot(1, len(models), i + 1)
-        ax.boxplot(scores_by_question_idx[m].values())
-        ax.set_xticklabels(scores_by_question_idx[m].keys())
+        ax = fig.add_subplot(1, len(models) + 1, i + 1)
+        scores = [d["score"] for d in scores_by_question[m]]
+        all_scores.append(scores)
+        ax.bar(range(len(scores)), scores)
         ax.set_title(m)
         ax.set_ylabel("Evaluation Score")
         ax.set_xlabel("Question Index")
+
+    # Last subplot is average across all models
+    ax = fig.add_subplot(1, len(models) + 1, len(models) + 1)
+    # convert to numpy array and average across axis 0
+    all_scores = np.array(all_scores)
+    avg_scores = np.mean(all_scores, axis=0)
+    ax.bar(range(len(avg_scores)), avg_scores)
+    ax.set_title("Average")
+    ax.set_ylabel("Evaluation Score")
+    ax.set_xlabel("Question Index")
 
     fig.suptitle(f"QA Score by Question - (CTX: {ctx_name})")
     plt.show()
@@ -140,17 +152,23 @@ def create_plots(
     plt.close(fig)
 
     # Table Version
-    headers = ["Q Idx", "Model", "Score"]
+    headers = ["Q Idx", "Model", "Score", "Question", "Answer"]
     table = []
-    for model, questions in scores_by_question_idx.items():
-        for i, scores in questions.items():
-            # mean = sum(scores) / len(scores)
-            # table.append([i, model, mean])
-            cmean = colored_score(sum(scores) / len(scores))
-            table.append([i, model, cmean])
+    scores = []
+    for model, questions in scores_by_question.items():
+        for i, data in enumerate(questions):
+            score = data["score"]
+            scores.append(score)
+            question = data["question"]
+            answer = data["answer"]
+            table.append([i, model, cscore(score), question, answer])
 
     # sort by question index
     table = sorted(table, key=lambda x: x[0])
+
+    # last row for average across the scores
+    avg_score = np.mean(scores)
+    table.append(["-", "Avg", cscore(avg_score), "-", "-"])
 
     print(
         tabulate(
@@ -169,7 +187,6 @@ def create_plots(
     for i, m in enumerate(models):
         ax = fig.add_subplot(1, len(models), i + 1)
         ax.boxplot(scores_by_answer[m].values())
-        # ax.set_xticklabels(scores_by_answer[m].keys())
         ax.set_xticklabels(range(len(expected_answers)))
 
         ax.set_title(m)
@@ -186,18 +203,46 @@ def create_plots(
     # Table Version
     headers = ["Model", "A Idx", "Expected Answer", "Min", "Mean", "Max"]
     table = []
+    min_scores, mean_scores, max_scores = [], [], []
     for model, answers in scores_by_answer.items():
         for i, a in enumerate(answers.keys()):
             scores = answers[a]
-            # mean = sum(scores) / len(scores)
-            # table.append([i, a, min(scores), mean, max(scores), model])
-            cmin = colored_score(min(scores))
-            cmean = colored_score(sum(scores) / len(scores))
-            cmax = colored_score(max(scores))
-            table.append([model, i, a, cmin, cmean, cmax])
+            smin = min(scores)
+            smean = sum(scores) / len(scores)
+            smax = max(scores)
+            min_scores.append(smin)
+            mean_scores.append(smean)
+            max_scores.append(smax)
+            table.append(
+                [
+                    model,
+                    i,
+                    a,
+                    cscore(smin),
+                    cscore(smean),
+                    cscore(smax),
+                ]
+            )
 
     # sort by answer index
     table = sorted(table, key=lambda x: x[1])
+
+    # average across the scores (min, mean, max)
+    min_avg, mean_avg, max_avg = (
+        np.mean(min_scores),
+        np.mean(mean_scores),
+        np.mean(max_scores),
+    )
+    table.append(
+        [
+            "Avg",
+            "-",
+            "-",
+            cscore(min_avg),
+            cscore(mean_avg),
+            cscore(max_avg),
+        ]
+    )
 
     print(
         tabulate(
@@ -224,13 +269,31 @@ def create_plots(
     # Table Version
     headers = ["Model", "Min", "Mean", "Max"]
     table = []
+    min_scores, mean_scores, max_scores = [], [], []
     for i, m in enumerate(scores_by_model.keys()):
         scores = scores_by_model[m]
-        # table.append([m, min(scores), mean, max(scores)])
-        cmin = colored_score(min(scores))
-        cmean = colored_score(sum(scores) / len(scores))
-        cmax = colored_score(max(scores))
-        table.append([m, cmin, cmean, cmax])
+        smin = min(scores)
+        smean = sum(scores) / len(scores)
+        smax = max(scores)
+        min_scores.append(smin)
+        mean_scores.append(smean)
+        max_scores.append(smax)
+        table.append(
+            [
+                m,
+                cscore(smin),
+                cscore(smean),
+                cscore(smax),
+            ]
+        )
+
+    # average across the scores (min, mean, max)
+    min_avg, mean_avg, max_avg = (
+        np.mean(min_scores),
+        np.mean(mean_scores),
+        np.mean(max_scores),
+    )
+    table.append(["Avg", cscore(min_avg), cscore(mean_avg), cscore(max_avg)])
 
     print(
         tabulate(
