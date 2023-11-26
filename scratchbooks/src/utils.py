@@ -79,9 +79,13 @@ def get_similarity_score(sentence1: str, sentence2: str):
     doc1 = nlp(sentence1)
     doc2 = nlp(sentence2)
 
-    # remove stop words and lemmatize
-    doc1 = nlp(" ".join([token.lemma_ for token in doc1 if not token.is_stop]))
-    doc2 = nlp(" ".join([token.lemma_ for token in doc2 if not token.is_stop]))
+    # remove stop words and punctuation
+    doc1 = [t for t in doc1 if not t.is_stop and not t.is_punct]
+    doc2 = [t for t in doc2 if not t.is_stop and not t.is_punct]
+
+    # combine into a single doc
+    doc1 = nlp(" ".join([t.text for t in doc1]))
+    doc2 = nlp(" ".join([t.text for t in doc2]))
 
     # Compute the similarity score
     score = doc1.similarity(doc2)
