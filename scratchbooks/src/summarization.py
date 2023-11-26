@@ -2,8 +2,7 @@ from typing import Optional
 from transformers import pipeline
 import torch
 from pprint import pprint
-from .utils import get_similarity_score
-
+from .utils import get_summarization_score
 
 def run(
     text: str,
@@ -64,6 +63,7 @@ def run_models(
     text: str,
     models: list[str],
     expected_answer: str,
+    score_type: str,
     **kwargs,
 ):
     if expected_answer is None:
@@ -74,7 +74,7 @@ def run_models(
 
     for model in models:
         a = run(text, model, **kwargs)
-        s = get_similarity_score(a, expected_answer)
+        s = get_summarization_score(a, expected_answer, score_type, model)
         answers.append(a)
         scores.append(s)
 

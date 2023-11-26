@@ -1,5 +1,6 @@
 import os
 import glob
+import evaluate
 from termcolor import colored, cprint
 
 
@@ -78,6 +79,20 @@ def get_similarity_score(sentence1: str, sentence2: str):
     cprint(f"SIMILARITY: {round(score, 4)}", color)
 
     return score
+
+
+def get_summarization_score(sum_text: str, text: str, score_metric: str, model: str):
+    metric = evaluate.load(score_metric)
+    
+    results = metric.compute(
+        predictions=[sum_text],
+        references=[text]
+    )
+    
+    print(score_metric, " -> EVAL RESULTS FOR MODEL", model)
+    print(results)
+    
+    return results
 
 
 def create_plots(
