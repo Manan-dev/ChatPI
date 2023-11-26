@@ -4,18 +4,30 @@ Theft of a treasure
 
 ---
 
-Where did the crime take place?
+Describe the illicit activity that occurred.
 
-Pondicherry Lodge
+Theft of a treasure
+
+---
+
+What criminal activity took place?
+
+Theft of a treasure
 
 ---
 
 What are the specific details of the crime scene?
 
-Crime occured in a chemical laboratory
+Crime occured at Mr. Bartholomew Sholto's chemical laboratory
 
 ---
 
-What evidence was left behind at the crime scene?
+What details can be provided about the place where the crime unfolded?
 
-footprints, mud marks
+Crime occured at Mr. Bartholomew Sholto's chemical laboratory
+
+---
+
+Describe the specifics surrounding the location of the crime.
+
+Crime occured at Mr. Bartholomew Sholto's chemical laboratory
