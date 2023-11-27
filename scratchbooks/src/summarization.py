@@ -74,7 +74,7 @@ def run_models(
 
     for model in models:
         a = run(text, model, **kwargs)
-        s = get_summarization_score(a, expected_answer, score_type, model)
+        s = get_summarization_score(a, expected_answer, score_type)
         answers.append(a)
         scores.append(s)
 
