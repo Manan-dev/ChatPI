@@ -98,15 +98,15 @@ def get_similarity_score(sentence1: str, sentence2: str):
     return score
 
 
-def get_summarization_score(sum_text: str, text: str, score_metric: str, model: str):
+def get_summarization_score(sum_text: str, text: str, score_metric: str, **kwargs):
     metric = evaluate.load(score_metric)
     
     results = metric.compute(
         predictions=[sum_text],
-        references=[text]
+        references=[text],
+        **kwargs,
     )
-    
-    print(score_metric, " -> EVAL RESULTS FOR MODEL", model)
+
     print(results)
     
     return results
