@@ -8,11 +8,14 @@ from .utils import get_similarity_score
 def run(
     text: str,
     model: Optional[str] = None,
+    pipeline_name: str = "translation_en_to_fr",
     verbosity: int = 1,
     **kwargs,
 ):
     print("-" * 100)
     match verbosity:
+        case 1:
+            print(f"model: {model}")
         case 2:
             print(f"model: {model}")
             for k, v in kwargs.items():
@@ -23,7 +26,7 @@ def run(
 
     device = "cuda" if torch.cuda.is_available() else "cpu"
     pipe = pipeline(
-        "translation_en_to_fr",
+        pipeline_name,
         model=model,
         device=device,
     )
@@ -32,11 +35,11 @@ def run(
 
     text = text.strip()
 
-    match verbosity:
-        case 0:
-            pass
-        case 1:
-            print(f"> {text}")
+    # match verbosity:
+    #     case 0:
+    #         pass
+    #     case 1:
+    #         print(f"> {text}")
 
     res = pipe(
         text,
@@ -59,20 +62,21 @@ def run(
 
 def run_models(
     text: str,
-    models: list[str],
-    expected_answer: str,
+    models: list[tuple[str]],
     **kwargs,
 ):
-    if expected_answer is None:
-        expected_answer = ""
-
     answers = []
     scores = []
 
-    for model in models:
-        a = run(text, model=model, **kwargs)
-        s = get_similarity_score(a, expected_answer)
-        answers.append(a)
+    for model_en_to_fr, model_fr_to_en in models:
+        fr = run(
+            text, model=model_en_to_fr, pipeline_name="translation_en_to_fr", **kwargs
+        )
+        en = run(
+            fr, model=model_fr_to_en, pipeline_name="translation_fr_to_en", **kwargs
+        )
+        s = get_similarity_score(text, en)
+        answers.append((fr, en))
         scores.append(s)
 
     return answers, scores
