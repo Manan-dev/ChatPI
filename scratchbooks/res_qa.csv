@@ -1,0 +1,19 @@
+ctx_name,ctx_fname,question_idx,question,answer_true,model_idx,model_name,answer_pred,spacy_sim
+protagonist,protagonist.0.md,0,Who is the main character that the story revolves around?,Sherlock Holmes,0,distilbert-base-cased-distilled-squad,Beaune,0.0
+protagonist,protagonist.0.md,0,Who is the main character that the story revolves around?,Sherlock Holmes,1,distilbert-base-uncased-distilled-squad,the Beaune,0.0
+protagonist,protagonist.0.md,1,Who is the detective in the story?,Sherlock Holmes,0,distilbert-base-cased-distilled-squad,Sherlock Holmes,1.0
+protagonist,protagonist.0.md,1,Who is the detective in the story?,Sherlock Holmes,1,distilbert-base-uncased-distilled-squad,Sherlock Holmes,1.0
+protagonist,protagonist.0.md,2,Who is the main protagonist in the story?,Sherlock Holmes,0,distilbert-base-cased-distilled-squad,Sherlock Holmes,1.0
+protagonist,protagonist.0.md,2,Who is the main protagonist in the story?,Sherlock Holmes,1,distilbert-base-uncased-distilled-squad,Sherlock Holmes,1.0
+protagonist,protagonist.0.md,3,What are the defining characteristics or traits of the central character?,"Nervous, nonchalant, extraordinary",0,distilbert-base-cased-distilled-squad,extraordinary qualities,0.4968277965210649
+protagonist,protagonist.0.md,3,What are the defining characteristics or traits of the central character?,"Nervous, nonchalant, extraordinary",1,distilbert-base-uncased-distilled-squad,extraordinary qualities,0.4968277965210649
+protagonist,protagonist.0.md,4,What are the characteristics of the main protagonist?,"Nervous, nonchalant, extraordinary",0,distilbert-base-cased-distilled-squad,extraordinary qualities,0.4968277965210649
+protagonist,protagonist.0.md,4,What are the characteristics of the main protagonist?,"Nervous, nonchalant, extraordinary",1,distilbert-base-uncased-distilled-squad,extraordinary qualities,0.4968277965210649
+protagonist,protagonist.0.md,5,What are some qualities of the main character?,"Nervous, nonchalant, extraordinary",0,distilbert-base-cased-distilled-squad,"great powers, his masterly manner",0.5291821816114228
+protagonist,protagonist.0.md,5,What are some qualities of the main character?,"Nervous, nonchalant, extraordinary",1,distilbert-base-uncased-distilled-squad,extraordinary qualities,0.4968277965210649
+antagonist,antagonist.0.md,0,Who is the primary antagonist or perpetrator in the story?,Jonathan Small,0,distilbert-base-cased-distilled-squad,Jonathan Small,1.0
+antagonist,antagonist.0.md,0,Who is the primary antagonist or perpetrator in the story?,Jonathan Small,1,distilbert-base-uncased-distilled-squad,Miss Morstan,-0.005961746669993993
+antagonist,antagonist.0.md,1,Who is the perpetrator in the story?,Jonathan Small,0,distilbert-base-cased-distilled-squad,Jonathan Small,1.0
+antagonist,antagonist.0.md,1,Who is the perpetrator in the story?,Jonathan Small,1,distilbert-base-uncased-distilled-squad,Miss Morstan,-0.005961746669993993
+antagonist,antagonist.0.md,2,Who is the person responsible for the crime?,Jonathan Small,0,distilbert-base-cased-distilled-squad,Jonathan Small,1.0
+antagonist,antagonist.0.md,2,Who is the person responsible for the crime?,Jonathan Small,1,distilbert-base-uncased-distilled-squad,Jonathan Small,1.0
