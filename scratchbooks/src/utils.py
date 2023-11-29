@@ -1,5 +1,7 @@
 import os
 import glob
+import evaluate
+from termcolor import colored, cprint
 import numpy as np
 from termcolor import cprint, colored
 from matplotlib import pyplot as plt
@@ -62,12 +64,12 @@ def cscore(score: float):
     return colored(f"{round(score, 4)}", color)
 
 
-def get_similarity_score(sentence1: str, sentence2: str):
+def get_similarity_score(prediction: str, reference: str):
     import spacy
     from spacy.cli import download
 
-    sentence1 = sentence1.strip().lower()
-    sentence2 = sentence2.strip().lower()
+    prediction = prediction.strip().lower()
+    reference = reference.strip().lower()
 
     file = "en_core_web_lg"
 
@@ -76,8 +78,8 @@ def get_similarity_score(sentence1: str, sentence2: str):
     nlp = spacy.load(file)
 
     # Process the sentences
-    doc1 = nlp(sentence1)
-    doc2 = nlp(sentence2)
+    doc1 = nlp(prediction)
+    doc2 = nlp(reference)
 
     # remove stop words and punctuation
     doc1 = [t for t in doc1 if not t.is_stop and not t.is_punct]
@@ -90,9 +92,26 @@ def get_similarity_score(sentence1: str, sentence2: str):
     # Compute the similarity score
     score = doc1.similarity(doc2)
 
-    print(f"SIMILARITY: {cscore(score)}")
-
     return score
+
+
+def get_eval_score(
+    prediction: str,
+    reference: str,
+    metric: str,
+    **kwargs,
+):
+    if metric == "spacy_sim":
+        score = get_similarity_score(prediction, reference)
+        return dict(spacy_sim=score)
+
+    m = evaluate.load(metric)
+
+    return m.compute(
+        predictions=[prediction],
+        references=[reference],
+        **kwargs,
+    )
 
 
 def create_plots(

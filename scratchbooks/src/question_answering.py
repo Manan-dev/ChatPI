@@ -2,7 +2,7 @@ from typing import Optional
 from transformers import pipeline
 import torch
 from pprint import pprint
-from .utils import get_similarity_score
+from .utils import get_similarity_score, get_eval_score
 
 
 def run(
@@ -77,6 +77,7 @@ def run_models(
     context: str,
     models: list[str],
     expected_answer: str,
+    metric: str = "spacy_sim",
     **kwargs,
 ):
     if expected_answer is None:
@@ -87,7 +88,7 @@ def run_models(
 
     for model in models:
         a = run(question, context, model=model, **kwargs)
-        s = get_similarity_score(a, expected_answer)
+        s = get_eval_score(a, expected_answer, metric)
 
         answers.append(a)
         scores.append(s)
