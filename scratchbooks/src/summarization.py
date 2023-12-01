@@ -74,8 +74,8 @@ def run_models(
     scores = []
 
     for model in models:
-        a = run(text, model, **kwargs)
-        s = get_eval_score(a, expected_answer, metric)
+        a = run(text, model)
+        s = get_eval_score(a, expected_answer, metric, **kwargs)
 
         answers.append(a)
         scores.append(s)
