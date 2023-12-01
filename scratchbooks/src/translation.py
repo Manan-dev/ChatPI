@@ -5,7 +5,7 @@ from pprint import pprint
 from .utils import get_eval_score
 
 
-def run(
+def run_tr(
     text: str,
     model: Optional[str] = None,
     pipeline_name: str = "translation_en_to_fr",
@@ -60,26 +60,49 @@ def run(
     return translation_text
 
 
-def run_models(
+def run_tr_models(
     text: str,
     models: list[tuple[str]],
     **kwargs,
 ):
-    answers = []
-    scores = []
+    translation_preds = []
+    score_dicts = []
 
     for model_en_to_fr, model_fr_to_en in models:
-        fr = run(
+        # translate original text from english to french
+        text_fr = run_tr(
             text, model=model_en_to_fr, pipeline_name="translation_en_to_fr", **kwargs
         )
-        en = run(
-            fr, model=model_fr_to_en, pipeline_name="translation_fr_to_en", **kwargs
+        # translate the french text back to english
+        text_en = run_tr(
+            text_fr,
+            model=model_fr_to_en,
+            pipeline_name="translation_fr_to_en",
+            **kwargs,
         )
-        s = get_eval_score(en, text, metric="spacy_sim")
-        s |= get_eval_score(en, text, metric="bertscore", lang="en")
-        s |= get_eval_score(en, text, metric="rouge")
 
-        answers.append((fr, en))
-        scores.append(s)
+        # evaluate by comparing the text translated back to english to the original english text
+        score_dict = get_eval_score(
+            text_en,
+            text,
+            metric="spacy_sim",
+        )
+        score_dict |= get_eval_score(
+            text_en,
+            text,
+            metric="bertscore",
+            lang="en",
+            model_type="microsoft/deberta-xlarge-mnli",
+        )
+        score_dict |= get_eval_score(
+            text_en,
+            text,
+            metric="rouge",
+        )
 
-    return answers, scores
+        pprint(score_dict)
+
+        translation_preds.append((text_fr, text_en))
+        score_dicts.append(score_dict)
+
+    return translation_preds, score_dicts

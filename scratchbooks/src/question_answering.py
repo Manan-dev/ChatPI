@@ -5,7 +5,7 @@ from pprint import pprint
 from .utils import get_similarity_score, get_eval_score
 
 
-def run(
+def run_qa(
     question: str,
     context: str,
     model: Optional[str] = None,
@@ -72,25 +72,49 @@ def run(
     return answer
 
 
-def run_models(
+def run_qa_models(
     question: str,
     context: str,
     models: list[str],
-    expected_answer: str,
-    metric: str = "spacy_sim",
+    answer_true: str,
     **kwargs,
 ):
-    if expected_answer is None:
-        expected_answer = ""
+    if answer_true is None:
+        answer_true = ""
 
-    answers = []
-    scores = []
+    answer_preds = []
+    score_dicts = []
 
     for model in models:
-        a = run(question, context, model=model, **kwargs)
-        s = get_eval_score(a, expected_answer, metric)
+        answer_pred = run_qa(
+            question,
+            context,
+            model=model,
+            **kwargs,
+        )
 
-        answers.append(a)
-        scores.append(s)
+        # compare the predicted answer to the true answer
+        score_dict = get_eval_score(
+            answer_pred,
+            answer_true,
+            metric="spacy_sim",
+        )
+        score_dict |= get_eval_score(
+            answer_pred,
+            answer_true,
+            metric="bertscore",
+            lang="en",
+            model_type="microsoft/deberta-xlarge-mnli",
+        )
+        score_dict |= get_eval_score(
+            answer_pred,
+            answer_true,
+            metric="rouge",
+        )
 
-    return answers, scores
+        pprint(score_dict)
+
+        answer_preds.append(answer_pred)
+        score_dicts.append(score_dict)
+
+    return answer_preds, score_dicts
