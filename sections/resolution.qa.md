@@ -1,51 +1,51 @@
-What are the key pieces of evidence that suggest the perpetrator committed the crime?
-
-A map is drawn for them by an Englishman named Jonathan Small
-
----
-
-What key clues indicate that the perpetrator committed the crime?
-
-A map is drawn for them by an Englishman named Jonathan Small
-
----
-
-What crucial evidence points to the perpetrator's involvement in the crime?
-
-A map is drawn for them by an Englishman named Jonathan Small
-
----
-
-Who committed the crime?
+Who drew the map for the treasure?
 
 Jonathan Small
 
 ---
 
-Who is guilty of the crime?
+Whose possession was the chart originally in?
+
+Captain Morstan
+
+---
+
+What is the name of the group associated with Small?
+
+The sign of the four
+
+---
+
+What symbol did Jonathan Small use on the chart?
+
+Sign of the four
+
+---
+
+Why couldn't Jonathan Small retrieve the treasure himself?
+
+He was a convict
+
+---
+
+What caused Major Sholto distress?
+
+A letter from India
+
+---
+
+What did the letter inform Major Sholto?
+
+Men were freed/escaped
+
+---
+
+What action did Major Sholto take against the mistaken man?
+
+Fired a pistol
+
+---
+
+Who is the only white man on the chart?
 
 Jonathan Small
-
----
-
-Who is responsible for the crime?
-
-Jonathan Small
-
----
-
-What is the detective's theory about the crime?
-
-Therefore we may say with confidence that the wooden-legged man is identical with Jonathan Small.
-
----
-
-What theory does the detective have about what happened?
-
-Therefore we may say with confidence that the wooden-legged man is identical with Jonathan Small.
-
----
-
-What is the detective's idea about how the crime occurred?
-
-Therefore we may say with confidence that the wooden-legged man is identical with Jonathan Small.

@@ -1,33 +1,51 @@
-What type of crime was committed?
-
-Theft of a treasure
-
----
-
-Describe the illicit activity that occurred.
-
-Theft of a treasure
-
----
-
 What criminal activity took place?
 
 Theft of a treasure
 
 ---
 
-What are the specific details of the crime scene?
+Where was the treasure found?
 
-Crime occured at Mr. Bartholomew Sholto's chemical laboratory
-
----
-
-What details can be provided about the place where the crime unfolded?
-
-Crime occured at Mr. Bartholomew Sholto's chemical laboratory
+Chemical laboratory
 
 ---
 
-Describe the specifics surrounding the location of the crime.
+Where did the crime take place
 
-Crime occured at Mr. Bartholomew Sholto's chemical laboratory
+Chemical laboratory
+
+---
+
+How did Tonga access the roof?
+
+Trap-door
+
+---
+
+What hindered Jonathan's access to the treasure?
+
+Wooden leg
+
+---
+
+Who climbed through the roof for Jonathan Small?
+
+Tonga
+
+---
+
+Who was still in the room when Tonga entered?
+
+Bartholomew Sholto
+
+---
+
+What did Tonga do to Bartholomew Sholto?
+
+Killed him
+
+---
+
+What symbol did the narrator leave on the table?
+
+Sign of the four
