@@ -16,6 +16,24 @@ Sherlock Holmes
 
 ---
 
+What was noticeable about Holmes' forearm and wrist?
+
+Puncture-marks
+
+---
+
+What substance did Holmes use that day?
+
+Cocaine
+
+---
+
+What emotion does the narrator feel towards Holmes' habit?
+
+Irritation
+
+---
+
 What are the defining characteristics or traits of the central character?
 
 Nervous, nonchalant, extraordinary
