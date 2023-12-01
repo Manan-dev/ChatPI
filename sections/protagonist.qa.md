@@ -16,9 +16,21 @@ Sherlock Holmes
 
 ---
 
+What did Holmes take from the morocco case?
+
+Syringe
+
+---
+
 What was noticeable about Holmes' forearm and wrist?
 
 Puncture-marks
+
+---
+
+Describe Holmes' manner while preparing the injection.
+
+Nonchalant
 
 ---
 
@@ -34,18 +46,6 @@ Irritation
 
 ---
 
-What are the defining characteristics or traits of the central character?
+What made the narrator more irritable over time?
 
-Nervous, nonchalant, extraordinary
-
----
-
-What are the characteristics of the main protagonist?
-
-Nervous, nonchalant, extraordinary
-
----
-
-What are some qualities of the main character?
-
-Nervous, nonchalant, extraordinary
+Holmes' habit
