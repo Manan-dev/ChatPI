@@ -63,7 +63,6 @@ def run(
 def run_models(
     text: str,
     models: list[tuple[str]],
-    metric: str = "spacy_sim",
     **kwargs,
 ):
     answers = []
@@ -76,7 +75,9 @@ def run_models(
         en = run(
             fr, model=model_fr_to_en, pipeline_name="translation_fr_to_en", **kwargs
         )
-        s = get_eval_score(en, text, metric)
+        s = get_eval_score(en, text, metric="spacy_sim")
+        s |= get_eval_score(en, text, metric="bertscore", lang="en")
+        s |= get_eval_score(en, text, metric="rouge")
 
         answers.append((fr, en))
         scores.append(s)
