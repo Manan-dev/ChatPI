@@ -68,9 +68,6 @@ def get_similarity_score(prediction: str, reference: str):
     import spacy
     from spacy.cli import download
 
-    prediction = prediction.strip().lower()
-    reference = reference.strip().lower()
-
     file = "en_core_web_lg"
 
     if not spacy.util.is_package(file):
@@ -101,17 +98,40 @@ def get_eval_score(
     metric: str,
     **kwargs,
 ):
+    prediction = prediction.strip().lower()
+    reference = reference.strip().lower()
+
     if metric == "spacy_sim":
         score = get_similarity_score(prediction, reference)
         return dict(spacy_sim=score)
 
     m = evaluate.load(metric)
 
-    return m.compute(
+    # dictionary containing the evaluation metric values
+    m_dict: dict = m.compute(
         predictions=[prediction],
         references=[reference],
         **kwargs,
     )
+
+    # iterate over the dictionary and prepend the metric name to the key
+    # if not already present (e.g. "bertscore" -> "bertscore_f1")
+    # m_dict = {f"{metric}_{k}": v for k, v in m_dict.items() if not k.startswith(metric)}
+    m_dict_new = {}
+    for k, v in m_dict.items():
+        if not k.startswith(metric):
+            k = f"{metric}_{k}"
+        m_dict_new[k] = v
+
+    # if any of the values are lists with just 1 element, then unpack the list
+    m_dict_new = {
+        k: v[0] if isinstance(v, list) and len(v) == 1 else v
+        for k, v in m_dict_new.items()
+    }
+
+    assert len(m_dict_new) > 0, f"Metric: {metric} returned empty dict"
+
+    return m_dict_new
 
 
 def create_plots(
