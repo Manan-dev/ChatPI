@@ -116,14 +116,22 @@ def get_eval_score(
 
     # iterate over the dictionary and prepend the metric name to the key
     # if not already present (e.g. "bertscore" -> "bertscore_f1")
-    m_dict = {f"{metric}_{k}": v for k, v in m_dict.items() if not k.startswith(metric)}
+    # m_dict = {f"{metric}_{k}": v for k, v in m_dict.items() if not k.startswith(metric)}
+    m_dict_new = {}
+    for k, v in m_dict.items():
+        if not k.startswith(metric):
+            k = f"{metric}_{k}"
+        m_dict_new[k] = v
 
     # if any of the values are lists with just 1 element, then unpack the list
-    m_dict = {
-        k: v[0] if isinstance(v, list) and len(v) == 1 else v for k, v in m_dict.items()
+    m_dict_new = {
+        k: v[0] if isinstance(v, list) and len(v) == 1 else v
+        for k, v in m_dict_new.items()
     }
 
-    return m_dict
+    assert len(m_dict_new) > 0, f"Metric: {metric} returned empty dict"
+
+    return m_dict_new
 
 
 def create_plots(

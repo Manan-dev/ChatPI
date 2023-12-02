@@ -82,24 +82,25 @@ def run_tr_models(
         )
 
         # evaluate by comparing the text translated back to english to the original english text
-        score_dict = get_eval_score(
+        score_dict_1 = get_eval_score(
             text_en,
             text,
             metric="spacy_sim",
         )
-        score_dict |= get_eval_score(
+        score_dict_2 = get_eval_score(
             text_en,
             text,
             metric="bertscore",
             lang="en",
             model_type="microsoft/deberta-xlarge-mnli",
         )
-        score_dict |= get_eval_score(
+        score_dict_3 = get_eval_score(
             text_en,
             text,
             metric="rouge",
         )
 
+        score_dict = {**score_dict_1, **score_dict_2, **score_dict_3}
         pprint(score_dict)
 
         translation_preds.append((text_fr, text_en))

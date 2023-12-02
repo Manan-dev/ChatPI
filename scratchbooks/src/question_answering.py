@@ -94,24 +94,25 @@ def run_qa_models(
         )
 
         # compare the predicted answer to the true answer
-        score_dict = get_eval_score(
+        score_dict_1 = get_eval_score(
             answer_pred,
             answer_true,
             metric="spacy_sim",
         )
-        score_dict |= get_eval_score(
+        score_dict_2 = get_eval_score(
             answer_pred,
             answer_true,
             metric="bertscore",
             lang="en",
             model_type="microsoft/deberta-xlarge-mnli",
         )
-        score_dict |= get_eval_score(
+        score_dict_3 = get_eval_score(
             answer_pred,
             answer_true,
             metric="rouge",
         )
 
+        score_dict = {**score_dict_1, **score_dict_2, **score_dict_3}
         pprint(score_dict)
 
         answer_preds.append(answer_pred)
