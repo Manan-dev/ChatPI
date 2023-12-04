@@ -14,9 +14,6 @@ def read_context(fname, basepath="./sections"):
     files = glob.glob(globpath)
     files = sorted(files)
 
-    fnames = [os.path.basename(f) for f in files]
-    print(f"Found: {fnames}")
-
     for fname in files:
         fnameparts = fname.split(".")
         if not fnameparts[-2].isdigit():

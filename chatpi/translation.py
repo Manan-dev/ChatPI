@@ -12,15 +12,6 @@ def run_tr(
     verbosity: int = 1,
     **kwargs,
 ):
-    print("-" * 100)
-    match verbosity:
-        case 1:
-            print(f"model: {model}")
-        case 2:
-            print(f"model: {model}")
-            for k, v in kwargs.items():
-                print(f"{k}: {v}")
-            print("~" * 80)
 
     # Construct Pipeline
 
@@ -56,7 +47,6 @@ def run_tr(
     translation_text = translation_text.strip()
 
     # print()
-    print(f"> {translation_text}")
     return translation_text
 
 

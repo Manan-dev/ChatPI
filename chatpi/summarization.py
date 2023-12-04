@@ -11,18 +11,6 @@ def run_sum(
     verbosity: int = 1,
     **kwargs,
 ):
-    # TODO: set some good defaults here?
-    # kwargs.setdefault("min_length", 5)
-    # kwargs.setdefault("max_length", 20)
-
-    print("-" * 80)
-    match verbosity:
-        case 2:
-            print(f"model: {model}")
-            for k, v in kwargs.items():
-                print(f"{k}: {v}")
-            print("~" * 80)
-
     # Construct Pipeline
 
     device = "cuda" if torch.cuda.is_available() else "cpu"
@@ -36,15 +24,12 @@ def run_sum(
 
     text = text.strip()
 
-    match verbosity:
-        case 1 | 2:
-            print(f"> {text}")
 
     res = pipe(
         text,
         **kwargs,
     )
-    # pprint(res)
+
 
     # Get the result
     summary_text = "idk"
@@ -55,7 +40,6 @@ def run_sum(
     summary_text = summary_text.strip()
 
     # print()
-    print(f"> {summary_text}")
 
     return summary_text
 
