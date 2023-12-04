@@ -5,7 +5,7 @@ from pprint import pprint
 from .utils import get_eval_score
 
 
-def run(
+def run_sum(
     text: str,
     model: Optional[str] = None,
     verbosity: int = 1,
@@ -60,7 +60,7 @@ def run(
     return summary_text
 
 
-def run_models(
+def run_sum_models(
     text: str,
     models: list[str],
     expected_answer: str,
