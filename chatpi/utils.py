@@ -8,7 +8,7 @@ from matplotlib import pyplot as plt
 from tabulate import tabulate
 
 
-def read_context(fname, basepath="./sections"):
+def read_context(fname, basepath=f'{os.path.realpath(__file__)}/sections'):
     globpath = os.path.join(basepath, f"{fname}.*.md")
 
     files = glob.glob(globpath)
@@ -24,7 +24,7 @@ def read_context(fname, basepath="./sections"):
             yield fname, text
 
 
-def read_quiz(fname, basepath="./sections"):
+def read_quiz(fname, basepath=f'{os.path.realpath(__file__)}/sections'):
     fname = os.path.join(basepath, f"{fname}.qa.md")
     with open(fname, "r") as f:
         text = f.read().strip()
