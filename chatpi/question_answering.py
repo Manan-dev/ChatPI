@@ -12,16 +12,6 @@ def run_qa(
     verbosity: int = 1,
     **kwargs,
 ):
-    print("-" * 80)
-    match verbosity:
-        case 1:
-            print(f"model: {model}")
-        case 2:
-            print(f"model: {model}")
-            for k, v in kwargs.items():
-                print(f"{k}: {v}")
-            print("~" * 80)
-
     # Construct Pipeline
 
     device = "cuda" if torch.cuda.is_available() else "cpu"
@@ -36,15 +26,6 @@ def run_qa(
 
     question = question.strip()
     context = context.strip()
-
-    match verbosity:
-        case 0:
-            pass
-        case 1:
-            print(f"Q: {question}")
-        case 2:
-            print(f"C: {context}")
-            print(f"Q: {question}")
 
     # display(Markdown(f"**Q:** {question}"))
     # display(Markdown(f"**C:** {context}"))
@@ -66,7 +47,6 @@ def run_qa(
     answer = answer.strip()
     score = round(score, 3)
 
-    print(f"A: {answer} (model confidence score: {round(score, 3)})")
     # display(Markdown(f"**A:** {answer} (score: {score})"))
 
     return answer
