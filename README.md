@@ -6,7 +6,7 @@ Objective: Develop a multi-lingual mini chatbot (ChatPI) that can take natural l
 
 ## Scratchbooks
 
-- The main notebook to be loaded into Google Colab is `ChatPI.ipynb`
+### The main notebook to be loaded into Google Colab is `ChatPI.ipynb`
 
 ## Deliverables
 
