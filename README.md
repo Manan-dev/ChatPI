@@ -11,6 +11,7 @@ Objective: Develop a multi-lingual mini chatbot (ChatPI) that can take natural l
 To run the interactive chatbot, please load `ChatPI.ipynb` into Google Colab.
 
 - Colab Link: <https://colab.research.google.com/github/Manan-dev/ChatPI/blob/main/ChatPI.ipynb>
+- The above should open the notebook in Google Colab. If not, you can manually upload the notebook to Google Colab.
 
 The notebook will contain cells that will automatically install dependencies and clone the repo for you.
 
