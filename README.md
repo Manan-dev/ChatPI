@@ -4,9 +4,11 @@ Authors: Andrei Cozma, Manan Patel, Tulsi Tailor, Zac Perry
 
 Objective: Develop a multi-lingual mini chatbot (ChatPI) that can take natural language queries about the plot of novels, answer questions in two different languages, and summarize the key points about the plot sections.
 
-## Final Google Colab Notebook
+# Usage
 
 ### The main notebook to be loaded into Google Colab is `ChatPI.ipynb`
+
+To run the interactive chatbot, please load `ChatPI.ipynb` into Google Colab. The notebook will contain cells that will automatically install dependencies and clone the repo for you. That way, you will get all of the functionality of this project within the Google Colab environment without any hassle.
 
 ## Deliverables
 
