@@ -4,13 +4,9 @@ Authors: Andrei Cozma, Manan Patel, Tulsi Tailor, Zac Perry
 
 Objective: Develop a multi-lingual mini chatbot (ChatPI) that can take natural language queries about the plot of novels, answer questions in two different languages, and summarize the key points about the plot sections.
 
-## Scratchbooks
+## Final Google Colab Notebook
 
-p1 - https://colab.research.google.com/github/Manan-dev/ChatPI/blob/main/scratchbooks/p1-question-answering.ipynb
-
-p2 - https://colab.research.google.com/github/Manan-dev/ChatPI/blob/main/scratchbooks/p2-translation.ipynb
-
-p3 - https://colab.research.google.com/github/Manan-dev/ChatPI/blob/main/scratchbooks/p3-summarization.ipynb
+### The main notebook to be loaded into Google Colab is `ChatPI.ipynb`
 
 ## Deliverables
 
