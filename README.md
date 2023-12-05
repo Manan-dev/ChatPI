@@ -6,11 +6,7 @@ Objective: Develop a multi-lingual mini chatbot (ChatPI) that can take natural l
 
 ## Scratchbooks
 
-p1 - https://colab.research.google.com/github/Manan-dev/ChatPI/blob/main/scratchbooks/p1-question-answering.ipynb
-
-p2 - https://colab.research.google.com/github/Manan-dev/ChatPI/blob/main/scratchbooks/p2-translation.ipynb
-
-p3 - https://colab.research.google.com/github/Manan-dev/ChatPI/blob/main/scratchbooks/p3-summarization.ipynb
+- The main notebook to be loaded into Google Colab is `ChatPI.ipynb`
 
 ## Deliverables
 
